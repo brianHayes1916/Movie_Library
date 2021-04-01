@@ -59,6 +59,7 @@ namespace WebAPISample.Controllers
                 Movie movieToUpdate = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault();
                 movieToUpdate.Director = movie.Director;
                 movieToUpdate.Title = movie.Title;
+                movieToUpdate.Genre = movie.Genre;
                 _context.Update(movieToUpdate);
                 _context.SaveChanges();
                 return Ok(movie);

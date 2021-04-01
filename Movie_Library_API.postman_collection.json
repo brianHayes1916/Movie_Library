@@ -1,0 +1,120 @@
+{
+	"info": {
+		"_postman_id": "2e4e1202-1b97-4b8f-98be-7e1e661e11ce",
+		"name": "Movie_Library_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get_All",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44325/api/movie",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add_Movie",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Title\": \"Inception\",\r\n    \"Director\": \"Christopher Nolan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44325/api/movie",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_By_Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "Update_Movie",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44325/api/movie/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_Movie",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44325/api/movie",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
