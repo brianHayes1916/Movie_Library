@@ -29,11 +29,12 @@ namespace WebAPISample.Controllers
 
         // GET api/movie/5
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Movie))]
         public IActionResult Get(int id)
         {
-            // Retrieve movie by id from db logic
-            // return Ok(movie);
-            return Ok();
+            Movie movie = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault();
+
+            return Ok(movie);
         }
 
         // POST api/movie
