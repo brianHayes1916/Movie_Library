@@ -9,7 +9,7 @@ using WebAPISample.Models;
 
 namespace WebAPISample.Controllers
 {
-    [Route("api/[movie]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class MovieController : ControllerBase
     {
@@ -45,18 +45,18 @@ namespace WebAPISample.Controllers
             _context.Movies.Add(movieToAdd);
             _context.SaveChanges();
 
-            return Created("api/movie", movieToAdd);
+            return Created("api/controller", movieToAdd);
         }
 
         // PUT api/movie
-        [HttpPut]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Movie))]
-        public IActionResult Put([FromBody] Movie movie)
+        public IActionResult Put(int id, [FromBody] Movie movie)
         {
             try
             {
-                Movie movieToUpdate = _context.Movies.Where(m => m.MovieId == movie.MovieId).FirstOrDefault();
+                Movie movieToUpdate = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault();
                 movieToUpdate.Director = movie.Director;
                 movieToUpdate.Title = movie.Title;
                 _context.Update(movieToUpdate);
