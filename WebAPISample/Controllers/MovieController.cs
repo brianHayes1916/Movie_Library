@@ -9,7 +9,7 @@ using WebAPISample.Models;
 
 namespace WebAPISample.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[movie]")]
     [ApiController]
     public class MovieController : ControllerBase
     {
@@ -39,10 +39,13 @@ namespace WebAPISample.Controllers
 
         // POST api/movie
         [HttpPost]
-        public IActionResult Post([FromBody]Movie value)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Movie))]
+        public IActionResult Post([FromBody]Movie movieToAdd)
         {
-            // Create movie in db logic
-            return Ok();
+            _context.Movies.Add(movieToAdd);
+            _context.SaveChanges();
+
+            return Created("api/movie", movieToAdd);
         }
 
         // PUT api/movie
