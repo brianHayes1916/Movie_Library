@@ -50,23 +50,36 @@ namespace WebAPISample.Controllers
 
         // PUT api/movie
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Movie))]
         public IActionResult Put([FromBody] Movie movie)
         {
-            Movie movieToUpdate = _context.Movies.Where(m => m.MovieId == movie.MovieId).FirstOrDefault();
-            movieToUpdate.Director = movie.Director;
-            movieToUpdate.Title = movie.Title;
-            _context.Update(movieToUpdate);
-            _context.SaveChanges();
-            return Ok(movie);
+            try
+            {
+                Movie movieToUpdate = _context.Movies.Where(m => m.MovieId == movie.MovieId).FirstOrDefault();
+                movieToUpdate.Director = movie.Director;
+                movieToUpdate.Title = movie.Title;
+                _context.Update(movieToUpdate);
+                _context.SaveChanges();
+                return Ok(movie);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Something went wrong: {ex}");
+                return StatusCode(400, "Bad Request, Movie Not found");
+            }
+            
         }
 
         // DELETE api/movie/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Movie))]
         public IActionResult Delete(int id)
         {
-            // Delete movie from db logic
-            return Ok();
+            Movie movieToDelete = _context.Movies.Where(m => m.MovieId == id).FirstOrDefault();
+            _context.Remove(movieToDelete);
+            _context.SaveChanges();
+            return Ok(movieToDelete);
         }
     }
 }
