@@ -20,10 +20,11 @@ namespace WebAPISample.Controllers
         }
         // GET api/movie
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Movie))]
         public IActionResult Get()
         {
-            // Retrieve all movies from db logic
-            return Ok(new string[] { "movie1 string", "movie2 string" });
+            List<Movie> allMovies = _context.Movies.Select(movie => movie).ToList();
+            return Ok(allMovies);
         }
 
         // GET api/movie/5
