@@ -50,10 +50,15 @@ namespace WebAPISample.Controllers
 
         // PUT api/movie
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Movie))]
         public IActionResult Put([FromBody] Movie movie)
         {
-            // Update movie in db logic
-            return Ok();
+            Movie movieToUpdate = _context.Movies.Where(m => m.MovieId == movie.MovieId).FirstOrDefault();
+            movieToUpdate.Director = movie.Director;
+            movieToUpdate.Title = movie.Title;
+            _context.Update(movieToUpdate);
+            _context.SaveChanges();
+            return Ok(movie);
         }
 
         // DELETE api/movie/5
