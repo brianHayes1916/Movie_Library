@@ -7,15 +7,30 @@
 <body>
 
 <div id="response">
-    <pre></pre>
+    <pre>Fill out the details below to add a Movie to the database!</pre>
 </div>
 
 <form id="my-form">
     <input type="text" name="title" placeholder="Title" />
+    <input type="text" name="genre" placeholder="Genre" />
     <input type="text" name="director" placeholder="Director" />
 
-    <button type="submit">Submit</button>
+    <button type="submit">Add Movie</button>
 </form>
+
+<div id="AllMoviesTable">
+    <table class="table" id="movie_list_json">
+        <thead>
+            <tr>
+                <th>MovieId</th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Director</th>
+            </tr>                   
+        </thead>
+    </table>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script type="text/javascript" src="./app.js"></script>

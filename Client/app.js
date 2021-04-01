@@ -2,7 +2,8 @@
     function processForm( e ){
         var dict = {
         	Title : this["title"].value,
-        	Director: this["director"].value
+        	Director: this["director"].value,
+            Genre : this["genre"].value
         };
 
         $.ajax({
@@ -23,4 +24,33 @@
     }
 
     $('#my-form').submit( processForm );
+
+    $(document).ready(function(){
+        $.ajax({
+            url: 'https://localhost:44325/api/movie',
+            dataType: 'json',
+            type: 'get',
+            cache:false,
+            success: function(data){
+                console.log(data);
+                var movie = '';
+                $.each(data, function(index, value){
+                    console.log(value);
+                    movie += '<tr>';
+                    movie += '<td>'+value.movieId+'</td>';
+                    movie += '<td>'+value.title+'</td>';
+                    movie += '<td>'+value.genre+'</td>';
+                    movie += '<td>'+value.director+'</td>';
+                    movie += '</tr>';
+                });
+                $("#movie_list_json").append(movie);
+            },
+            error: function(d){
+                /*console.log("error");*/
+                alert("404. Please wait until the File is Loaded.");
+            }
+        });
+    });
+
 })(jQuery);
+
