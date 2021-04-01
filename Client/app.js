@@ -41,6 +41,7 @@
                     movie += '<td>'+value.title+'</td>';
                     movie += '<td>'+value.genre+'</td>';
                     movie += '<td>'+value.director+'</td>';
+                    movie += '<td>'+'<button id="delete {value.movieId}">Delete Movie</button>'+'</td>';
                     movie += '</tr>';
                 });
                 $("#movie_list_json").append(movie);
@@ -50,6 +51,25 @@
                 alert("404. Please wait until the File is Loaded.");
             }
         });
+    });
+
+    $(document).ready(function () {  
+        $("#delete").click(function () {  
+            let movie = new Object();  
+            movie.id = $('#id').val();   
+            $.ajax({  
+                url: 'https://localhost:44325/api/movie/{movie.id}',  
+                type: 'DELETE',  
+                dataType: 'json',  
+                data:movie,  
+                success: function (data, textStatus, xhr) {  
+                    console.log(data);  
+                },  
+                error: function (xhr, textStatus, errorThrown) {  
+                    console.log('Error in Operation');  
+                }  
+            });  
+        });  
     });
 
 })(jQuery);
