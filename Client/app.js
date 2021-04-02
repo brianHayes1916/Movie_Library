@@ -28,8 +28,6 @@
     $(document).ready(function(){
         populateMoviesTable();
     });
-
-
 })(jQuery);
 
 function populateMoviesTable(editMovieID = null){
@@ -44,7 +42,7 @@ function populateMoviesTable(editMovieID = null){
             $.each(data, function(index, value){
                 console.log(value);
                 if(this.movieId == editMovieID){
-                    editFrormHolder(this);
+                   editFormHolder(value)
                 }
                 else{
                 $("#movie_list_json").append('<tr><td>'+this.movieId+'</td>'+
@@ -86,32 +84,44 @@ function editMovie(movieID){
 }
     
 
-function updateMovie(movieId){
-    $.ajax({  
-        url: `https://localhost:44325/api/movie/${movieId}`,  
-        type: 'update',  
-        dataType: 'json',  
-        success: function (data, textStatus, xhr) {  
-            
-            console.log(data);  
-            populateMoviesTable();
-        },  
-        error: function (xhr, textStatus, errorThrown) {  
-            console.log('Error in Operation');  
-        }  
-    });  
-};  
+
 
 function clearTable(){
     document.getElementById("movie_list_json").innerHTML = " ";
 }
 
-function editFrormHolder(movie){
-    $("#movie_list_json").append('<form id="edit-form">' +
-    `<input type="text" name="title" placeholder="${movie.title}" />` +
-    `<input type="text" name="genre" placeholder="${movie.genre}" />` +
-    `<input type="text" name="director" placeholder="${movie.director}" />` +
+function editFormHolder(movie){
+    $("#movie_list_json").append('<tr><form id="edit-form">' +
+        `<td><input type="hidden" name="movieId" value="${movie.movieId}"></input></td>` +
+        `<td><input type="text" name="title" placeholder="${movie.title}" /></td>` +
+        `<td><input type="text" name="genre" placeholder="${movie.genre}" /></td>` +
+        `<td><input type="text" name="director" placeholder="${movie.director}" /></td>` +
+        `<td><button type="submit" onclick="">Update Movie</button></td>` +
+        '</form></tr>'
+    )
+}
 
-    '<button type="submit">Update Movie</button>' +
-    '</form>'
-    )}
+('#edit-form').submit( processEditForm )
+function processEditForm(){
+    var updatedMovie = {
+        Movie : this["movieId"].value,
+        Title : this["title"].value,
+        Director: this["director"].value,
+        Genre : this["genre"].value
+    };
+ 
+    $.ajax({
+      type: "update",
+      url: `https://localhost:44325/api/movie/${updatedMovie.movieId}`,  
+      data: updatedMovie,
+        success: function (updatedMovie, textStatus, xhr) {  
+        console.log(updatedMovie);  
+        populateMoviesTable();
+         },  
+        error: function (xhr, textStatus, errorThrown) {  
+        console.log('Error in Operation');  
+    }  
+    });
+ 
+    e.preventDefault();
+  }
