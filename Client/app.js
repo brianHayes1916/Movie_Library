@@ -14,63 +14,61 @@
             data: JSON.stringify(dict),
             success: function( data, textStatus, jQxhr ){
                 $('#response pre').html( data );
+                populateMoviesTable();
             },
             error: function( jqXhr, textStatus, errorThrown ){
                 console.log( errorThrown );
             }
         });
-
         e.preventDefault();
     }
-
     $('#my-form').submit( processForm );
 
     $(document).ready(function(){
-        $.ajax({
-            url: 'https://localhost:44325/api/movie',
-            dataType: 'json',
-            type: 'get',
-            cache:false,
-            success: function(data){
-                console.log(data);
-                var movie = '';
-                $.each(data, function(index, value){
-                    console.log(value);
-                    movie += '<tr>';
-                    movie += '<td>'+value.movieId+'</td>';
-                    movie += '<td>'+value.title+'</td>';
-                    movie += '<td>'+value.genre+'</td>';
-                    movie += '<td>'+value.director+'</td>';
-                    movie += '<td>'+'<button id="delete {value.movieId}">Delete Movie</button>'+'</td>';
-                    movie += '</tr>';
-                });
-                $("#movie_list_json").append(movie);
-            },
-            error: function(d){
-                /*console.log("error");*/
-                alert("404. Please wait until the File is Loaded.");
-            }
-        });
+        populateMoviesTable();
     });
 
-    $(document).ready(function () {  
-        $("#delete").click(function () {  
-            let movie = new Object();  
-            movie.id = $('#id').val();   
-            $.ajax({  
-                url: 'https://localhost:44325/api/movie/{movie.id}',  
-                type: 'DELETE',  
-                dataType: 'json',  
-                data:movie,  
-                success: function (data, textStatus, xhr) {  
-                    console.log(data);  
-                },  
-                error: function (xhr, textStatus, errorThrown) {  
-                    console.log('Error in Operation');  
-                }  
-            });  
-        });  
-    });
 
 })(jQuery);
 
+function populateMoviesTable(){
+    document.getElementById("movie_list_json").innerHTML = " ";
+
+    $.ajax({
+        url: 'https://localhost:44325/api/movie',
+        dataType: 'json',
+        type: 'get',
+        cache:false,
+        success: function(data){
+            console.log(data);
+            $.each(data, function(index, value){
+                console.log(value);
+                $("#movie_list_json").append('<tr><td>'+this.movieId+'</td>'+
+                '<td>'+this.title+'</td>' +
+                '<td>'+this.genre+'</td>' +
+                '<td>'+this.director+'</td>' +
+                '<td>'+`<button onclick="deleteMovie(${this.movieId})">Delete Movie</button>`+'</td></tr>'
+                );
+            });
+        },
+        error: function(d){
+            console.log("error");
+            alert("404. Please wait until the File is Loaded.");
+        }
+    });
+}
+
+function deleteMovie(movieId){
+    $.ajax({  
+        url: `https://localhost:44325/api/movie/${movieId}`,  
+        type: 'delete',  
+        dataType: 'json',  
+        success: function (data, textStatus, xhr) {  
+            console.log(data);  
+            populateMoviesTable();
+        },  
+        error: function (xhr, textStatus, errorThrown) {  
+            console.log('Error in Operation');  
+        }  
+    });  
+};  
