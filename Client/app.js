@@ -14,6 +14,7 @@
             data: JSON.stringify(dict),
             success: function( data, textStatus, jQxhr ){
                 $('#response pre').html( data );
+                clearTable();
                 populateMoviesTable();
             },
             error: function( jqXhr, textStatus, errorThrown ){
@@ -31,9 +32,8 @@
 
 })(jQuery);
 
-function populateMoviesTable(){
-    document.getElementById("movie_list_json").innerHTML = " ";
-
+function populateMoviesTable(editMovieID = null){
+    
     $.ajax({
         url: 'https://localhost:44325/api/movie',
         dataType: 'json',
@@ -43,12 +43,18 @@ function populateMoviesTable(){
             console.log(data);
             $.each(data, function(index, value){
                 console.log(value);
+                if(this.movieId == editMovieID){
+                    editFrormHolder(this);
+                }
+                else{
                 $("#movie_list_json").append('<tr><td>'+this.movieId+'</td>'+
                 '<td>'+this.title+'</td>' +
                 '<td>'+this.genre+'</td>' +
                 '<td>'+this.director+'</td>' +
-                '<td>'+`<button onclick="deleteMovie(${this.movieId})">Delete Movie</button>`+'</td></tr>'
+                '<td>'+`<button onclick="deleteMovie(${this.movieId})">Delete Movie</button>`+'</td>' +
+                '<td>'+`<button onclick="editMovie(${this.movieId})">Edit Movie</button>`+'</td></tr>' 
                 );
+                }
             });
         },
         error: function(d){
@@ -64,6 +70,29 @@ function deleteMovie(movieId){
         type: 'delete',  
         dataType: 'json',  
         success: function (data, textStatus, xhr) {  
+            console.log(data); 
+            clearTable(); 
+            populateMoviesTable();
+        },  
+        error: function (xhr, textStatus, errorThrown) {  
+            console.log('Error in Operation');  
+        }  
+    });  
+};  
+
+function editMovie(movieID){
+    clearTable();
+    populateMoviesTable(movieID);
+}
+    
+
+function updateMovie(movieId){
+    $.ajax({  
+        url: `https://localhost:44325/api/movie/${movieId}`,  
+        type: 'update',  
+        dataType: 'json',  
+        success: function (data, textStatus, xhr) {  
+            
             console.log(data);  
             populateMoviesTable();
         },  
@@ -72,3 +101,17 @@ function deleteMovie(movieId){
         }  
     });  
 };  
+
+function clearTable(){
+    document.getElementById("movie_list_json").innerHTML = " ";
+}
+
+function editFrormHolder(movie){
+    $("#movie_list_json").append('<form id="edit-form">' +
+    `<input type="text" name="title" placeholder="${movie.title}" />` +
+    `<input type="text" name="genre" placeholder="${movie.genre}" />` +
+    `<input type="text" name="director" placeholder="${movie.director}" />` +
+
+    '<button type="submit">Update Movie</button>' +
+    '</form>'
+    )}
