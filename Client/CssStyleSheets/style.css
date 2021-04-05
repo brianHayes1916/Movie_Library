@@ -1,3 +1,19 @@
-body{
-    color:lightcoral;
-}
+body {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 80px;
+  }
+
+  body{
+      color:lightcoral;
+  }
+
+  form{
+      margin-bottom: 75px;
+  }
+
+  body {
+    font-family: 'Major Mono Display', monospace;
+    font-size: 12px;
+  }
