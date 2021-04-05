@@ -101,22 +101,24 @@ function editFormHolder(movie){
 
 function processEditForm(){
     var updatedMovie = {
-        MovieId: this["movieId"].value,
-        Title : this["movieTitle"].value,
-        Director: this["director"].value,
-        Genre : this["genre"].value
+        movieId: this["movieId"].value,
+        title : this["movieTitle"].value,
+        genre : this["genre"].value,
+        director: this["director"].value
     };
  
     $.ajax({
-      type: "put",
-      url: `https://localhost:44325/api/movie/${updatedMovie.MovieId}`,  
-      data: updatedMovie,
-        success: function (updatedMovie) {  
-        console.log(updatedMovie);  
-        populateMoviesTable();
-         },  
+        dataType: 'json',
+        type: 'put',
+        contentType: 'application/json',
+        url: `https://localhost:44325/api/movie/${updatedMovie.movieId}`,  
+        data: JSON.stringify(updatedMovie),
+        success: function (data) {  
+            console.log(data);  
+            populateMoviesTable();
+                },  
         error: function (xhr, textStatus, errorThrown) {  
-        console.log('Error in Operation');  
+            console.log('Error in Operation');  
     }  
     });
  
