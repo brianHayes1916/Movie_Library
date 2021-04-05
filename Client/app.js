@@ -89,29 +89,28 @@ function clearTable(){
 }
 
 function editFormHolder(movie){
-    $("#movie_list_json").append('<tr><form id="edit-form">' +
+    $("#movie_list_json").append('<tr class="table-secondary"><form id="edit-form">' +
         `<td><input style="display:none" type="hidden" id="movieId" name="movieId" value="${movie.movieId}"></input></td>` +
-        `<td><input type="text" name="title" placeholder="${movie.title}" /></td>` +
-        `<td><input type="text" name="genre" placeholder="${movie.genre}" /></td>` +
-        `<td><input type="text" name="director" placeholder="${movie.director}" /></td>` +
-        `<td><button type="submit" name="updateMovieBtn">Update Movie</button></td>` +
+        `<td><input type="text" name="title" id="movieTitle" placeholder="${movie.title}" /></td>` +
+        `<td><input type="text" name="genre" id="genre" placeholder="${movie.genre}" /></td>` +
+        `<td><input type="text" name="director" id="director" placeholder="${movie.director}" /></td>` +
+        `<td><button type="submit" onclick='processEditForm()'name="updateMovieBtn">Update Movie</button></td>` +
         '</form></tr>'
     )
-    $("#edit-form").on("submit", processEditForm);
 }
 
 function processEditForm(){
     var updatedMovie = {
         MovieId: this["movieId"].value,
-        Title : this["title"].value,
+        Title : this["movieTitle"].value,
         Director: this["director"].value,
         Genre : this["genre"].value
     };
  
     $.ajax({
       type: "put",
-      url: `https://localhost:44325/api/movie/${updatedMovie.movieId}`,  
-      data: JSON.stringify(updatedMovie),
+      url: `https://localhost:44325/api/movie/${updatedMovie.MovieId}`,  
+      data: updatedMovie,
         success: function (updatedMovie) {  
         console.log(updatedMovie);  
         populateMoviesTable();
@@ -121,5 +120,5 @@ function processEditForm(){
     }  
     });
  
-    e.preventDefault();
+    //e.preventDefault();
   }
