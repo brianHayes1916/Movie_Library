@@ -38,9 +38,7 @@ function populateMoviesTable(editMovieID = null){
         type: 'get',
         cache:false,
         success: function(data){
-            console.log(data);
             $.each(data, function(index, value){
-                console.log(value);
                 if(this.movieId == editMovieID){
                    editFormHolder(value)
                 }
@@ -92,29 +90,29 @@ function clearTable(){
 
 function editFormHolder(movie){
     $("#movie_list_json").append('<tr><form id="edit-form">' +
-        `<td><input type="hidden" name="movieId" value="${movie.movieId}"></input></td>` +
+        `<td><input style="display:none" type="hidden" id="movieId" name="movieId" value="${movie.movieId}"></input></td>` +
         `<td><input type="text" name="title" placeholder="${movie.title}" /></td>` +
         `<td><input type="text" name="genre" placeholder="${movie.genre}" /></td>` +
         `<td><input type="text" name="director" placeholder="${movie.director}" /></td>` +
-        `<td><button type="submit" onclick="">Update Movie</button></td>` +
+        `<td><button type="submit" name="updateMovieBtn">Update Movie</button></td>` +
         '</form></tr>'
     )
+    $("#edit-form").on("submit", processEditForm);
 }
 
-('#edit-form').submit( processEditForm )
 function processEditForm(){
     var updatedMovie = {
-        Movie : this["movieId"].value,
+        MovieId: this["movieId"].value,
         Title : this["title"].value,
         Director: this["director"].value,
         Genre : this["genre"].value
     };
  
     $.ajax({
-      type: "update",
+      type: "put",
       url: `https://localhost:44325/api/movie/${updatedMovie.movieId}`,  
-      data: updatedMovie,
-        success: function (updatedMovie, textStatus, xhr) {  
+      data: JSON.stringify(updatedMovie),
+        success: function (updatedMovie) {  
         console.log(updatedMovie);  
         populateMoviesTable();
          },  
