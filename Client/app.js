@@ -80,8 +80,6 @@ function editMovie(movieID){
     clearTable();
     populateMoviesTable(movieID);
 }
-    
-
 
 
 function clearTable(){
@@ -101,7 +99,7 @@ function editFormHolder(movie){
 
 function processEditForm(){
     var updatedMovie = {
-        movieId: this["movieId"].value,
+        movieId: parseInt(this["movieId"].value),
         title : this["movieTitle"].value,
         genre : this["genre"].value,
         director: this["director"].value
@@ -115,6 +113,7 @@ function processEditForm(){
         data: JSON.stringify(updatedMovie),
         success: function (data) {  
             console.log(data);  
+            clearTable();
             populateMoviesTable();
                 },  
         error: function (xhr, textStatus, errorThrown) {  
