@@ -38,7 +38,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Title\": \"Inception\",\r\n    \"Director\": \"Christopher Nolan\"\r\n}",
+					"raw": "{\r\n    \"Title\": \"Inception\",\r\n    \"Director\": \"Christopher Nolan\",\r\n    \"Genre\": \"Action\",\r\n    \"Image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Z3W07GcyhIJnWDK4zqf7gnfzgysM4kpx1A&usqp=CAU\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,10 +62,25 @@
 		},
 		{
 			"name": "Get_By_Id",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": null
+				"url": {
+					"raw": "https://localhost:44325/api/movie/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44325",
+					"path": [
+						"api",
+						"movie",
+						"2"
+					]
+				}
 			},
 			"response": []
 		},
@@ -77,8 +92,17 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"title\": \"movie\",\r\n        \"genre\": \"movie\",\r\n        \"director\": \"movie\",\r\n        \"image\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_Z3W07GcyhIJnWDK4zqf7gnfzgysM4kpx1A&usqp=CAU\"\r\n}        ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "https://localhost:44325/api/movie/1",
+					"raw": "https://localhost:44325/api/movie/17",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -87,7 +111,7 @@
 					"path": [
 						"api",
 						"movie",
-						"1"
+						"17"
 					]
 				}
 			},
@@ -102,7 +126,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:44325/api/movie",
+					"raw": "https://localhost:44325/api/movie/1",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -110,7 +134,8 @@
 					"port": "44325",
 					"path": [
 						"api",
-						"movie"
+						"movie",
+						"1"
 					]
 				}
 			},
