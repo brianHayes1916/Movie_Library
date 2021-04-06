@@ -11,24 +11,25 @@
 </head>
 <body>
 <h1>Welcome to the Movie Library!</h1>
-<div id="response">
-    <pre><b>Fill out the details below to add a Movie to the database!</b></pre>
-</div>
-<div>
+<div class="col-lg-">
+    <div id="response">
+        <pre><b>Fill out the details below to add a Movie to the database!</b></pre>
+    </div>
     <form id="my-form">
         <input type="text" id="form-customized" name="title" placeholder="Title" />
         <input type="text" id="form-customized" name="genre" placeholder="Genre" />
         <input type="text" id="form-customized" name="director" placeholder="Director" />
-    
+        <input type="text" id="form-customized" name="image" placeholder="image_url" />
+
         <button class="greenButton button" type="submit">Add Movie</button>
     </form>
-  </div>
-    
-
-
+    </div>
+<div class="col-sm-" id="searchBar">
+    <input type="text" id="myInput" onkeyup="searchBar()" placeholder="Search by Title/Genre/Director...">
+</div>
 
 <div id="AllMoviesTable">
-    <table class="table table-hover table-active" id="movie_list_json">
+    <table class="table table-hover table-active">
         <thead>
             <tr>
                 <th scope="col">MovieId</th>
@@ -37,10 +38,10 @@
                 <th scope="col">Director</th>
             </tr>                   
         </thead>
+        <tbody id="movie_list_json">
+        </tbody>
     </table>
 </div>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

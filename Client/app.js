@@ -14,7 +14,6 @@
             contentType: 'application/json',
             data: JSON.stringify(dict),
             success: function( data, textStatus, jQxhr ){
-                $('#response pre').html( data );
                 clearTable();
                 populateMoviesTable();
             },
@@ -45,7 +44,7 @@ function populateMoviesTable(editMovieID = null){
                 }
                 else{
                 $("#movie_list_json").append('<tr id="myTr"><td>'+this.movieId+'</td>'+
-                '<td>'+this.title+'</td>' +
+                `<td><button class="btn btn-primary btn-lg" href="${this.image}" target="popup"onclick="window.open('${this.image}','popup','width=auto,height=auto'); return false;">${this.title}</button></td>` +
                 '<td>'+this.genre+'</td>' +
                 '<td>'+this.director+'</td>' +
                 '<td id="excludeFromSearch">'+`<button class="redButton button" onclick="deleteMovie(${this.movieId})">Delete Movie</button>`+'</td>' +
@@ -83,14 +82,7 @@ function editMovie(movieID){
 
 
 function clearTable(){
-    document.getElementById("movie_list_json").innerHTML = '<thead>'+
-    '<tr>'+
-        '<th scope="col">MovieId</th>'+
-        '<th scope="col">Title</th>'+
-        '<th scope="col">Genre</th>'+
-        '<th scope="col">Director</th>'+
-    '</tr>'+                   
-'</thead>'
+    document.getElementById("movie_list_json").innerHTML = " ";
 }
 
 function editFormHolder(movie){
@@ -140,6 +132,8 @@ $("#myInput").on("keyup", function() {
 });
 });
 
-// $(document).ready(function() {
-//     $('.image-link').magnificPopup({type:'image'});
-//   });
+$(document).ready(function(){
+    $("#myBtn").click(function(){
+      $("#myModal").modal();
+    });
+  });
