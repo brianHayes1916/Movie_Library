@@ -47,8 +47,8 @@ function populateMoviesTable(editMovieID = null){
                 '<td>'+this.title+'</td>' +
                 '<td>'+this.genre+'</td>' +
                 '<td>'+this.director+'</td>' +
-                '<td>'+`<button onclick="deleteMovie(${this.movieId})">Delete Movie</button>`+'</td>' +
-                '<td>'+`<button onclick="editMovie(${this.movieId})">Edit Movie</button>`+'</td></tr>' 
+                '<td>'+`<button class="redButton button" onclick="deleteMovie(${this.movieId})">Delete Movie</button>`+'</td>' +
+                '<td>'+`<button class="yellowButton button" onclick="editMovie(${this.movieId})">Edit Movie</button>`+'</td></tr>' 
                 );
                 }
             });
@@ -66,7 +66,6 @@ function deleteMovie(movieId){
         type: 'delete',  
         dataType: 'json',  
         success: function (data, textStatus, xhr) {  
-            console.log(data); 
             clearTable(); 
             populateMoviesTable();
         },  
@@ -92,7 +91,7 @@ function editFormHolder(movie){
         `<td><input type="text" name="title" id="movieTitle" placeholder="${movie.title}" /></td>` +
         `<td><input type="text" name="genre" id="genre" placeholder="${movie.genre}" /></td>` +
         `<td><input type="text" name="director" id="director" placeholder="${movie.director}" /></td>` +
-        `<td><button type="submit" onclick='processEditForm()'name="updateMovieBtn">Update Movie</button></td>` +
+        `<td><button class="updateButton button" type="submit" onclick='processEditForm()'name="updateMovieBtn">Update Movie</button></td>` +
         '</form></tr>'
     )
 }
@@ -120,6 +119,4 @@ function processEditForm(){
             console.log('Error in Operation');  
     }  
     });
- 
-    //e.preventDefault();
   }
