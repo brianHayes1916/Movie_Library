@@ -88,9 +88,9 @@ function clearTable(){
 function editFormHolder(movie){
     $("#movie_list_json").append('<tr class="table-secondary"><form id="edit-form">' +
         `<td><input style="display:none" type="hidden" id="movieId" name="movieId" value="${movie.movieId}"></input></td>` +
-        `<td><input type="text" name="title" id="movieTitle" placeholder="${movie.title}" /></td>` +
-        `<td><input type="text" name="genre" id="genre" placeholder="${movie.genre}" /></td>` +
-        `<td><input type="text" name="director" id="director" placeholder="${movie.director}" /></td>` +
+        `<td><input type="text" name="title" class="form-customized" id="movieTitle" placeholder="${movie.title}" /></td>` +
+        `<td><input type="text" name="genre" class="form-customized" id="genre" placeholder="${movie.genre}" /></td>` +
+        `<td><input type="text" name="director" class="form-customized" id="director" placeholder="${movie.director}" /></td>` +
         `<td><button class="updateButton button" type="submit" onclick='processEditForm()'name="updateMovieBtn">Update Movie</button></td>` +
         '</form></tr>'
     )
