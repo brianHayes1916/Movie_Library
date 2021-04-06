@@ -43,12 +43,12 @@ function populateMoviesTable(editMovieID = null){
                    editFormHolder(value)
                 }
                 else{
-                $("#movie_list_json").append('<tr><td>'+this.movieId+'</td>'+
+                $("#movie_list_json").append('<tr id="myTr"><td>'+this.movieId+'</td>'+
                 '<td>'+this.title+'</td>' +
                 '<td>'+this.genre+'</td>' +
                 '<td>'+this.director+'</td>' +
-                '<td>'+`<button class="redButton button" onclick="deleteMovie(${this.movieId})">Delete Movie</button>`+'</td>' +
-                '<td>'+`<button class="yellowButton button" onclick="editMovie(${this.movieId})">Edit Movie</button>`+'</td></tr>' 
+                '<td id="excludeFromSearch">'+`<button class="redButton button" onclick="deleteMovie(${this.movieId})">Delete Movie</button>`+'</td>' +
+                '<td id="excludeFromSearch">'+`<button class="yellowButton button" onclick="editMovie(${this.movieId})">Edit Movie</button>`+'</td></tr>' 
                 );
                 }
             });
@@ -86,12 +86,12 @@ function clearTable(){
 }
 
 function editFormHolder(movie){
-    $("#movie_list_json").append('<tr class="table-secondary"><form id="edit-form">' +
+    $("#movie_list_json").append('<tr id="myTr" class="table-secondary"><form id="edit-form">' +
         `<td><input style="display:none" type="hidden" id="movieId" name="movieId" value="${movie.movieId}"></input></td>` +
         `<td><input type="text" name="title" class="form-customized" id="movieTitle" placeholder="${movie.title}" /></td>` +
         `<td><input type="text" name="genre" class="form-customized" id="genre" placeholder="${movie.genre}" /></td>` +
         `<td><input type="text" name="director" class="form-customized" id="director" placeholder="${movie.director}" /></td>` +
-        `<td><button class="updateButton button" type="submit" onclick='processEditForm()'name="updateMovieBtn">Update Movie</button></td>` +
+        `<td  id="excludeFromSearch"><button class="updateButton button" type="submit" onclick='processEditForm()'name="updateMovieBtn">Update Movie</button></td>` +
         '</form></tr>'
     )
 }
@@ -121,22 +121,11 @@ function processEditForm(){
     });
   }
 
-  function searchBar() {
-    // Declare variables
-    var input, filter, tr, td, a, i, txtValue;
-    input = document.getElementById('myInput');
-    filter = input.value.toUpperCase();
-    tr = document.getElementById("myTr");
-    td = ul.getElementsByTagName('td');
-
-    // Loop through all list items, and hide those who don't match the search query
-  for (i = 0; i < td.length; i++) {
-    a = td[i].getElementsByTagName("a")[0];
-    txtValue = a.textContent || a.innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      td[i].style.display = "";
-    } else {
-      td[i].style.display = "none";
-    }
-  }
-}
+$(document).ready(function(){
+$("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#movie_list_json tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+});
+});
