@@ -3,7 +3,8 @@
         var dict = {
         	Title : this["title"].value,
         	Director: this["director"].value,
-            Genre : this["genre"].value
+            Genre : this["genre"].value,
+            Image : this["image"].value
         };
 
         $.ajax({
@@ -82,15 +83,23 @@ function editMovie(movieID){
 
 
 function clearTable(){
-    document.getElementById("movie_list_json").innerHTML = " ";
+    document.getElementById("movie_list_json").innerHTML = '<thead>'+
+    '<tr>'+
+        '<th scope="col">MovieId</th>'+
+        '<th scope="col">Title</th>'+
+        '<th scope="col">Genre</th>'+
+        '<th scope="col">Director</th>'+
+    '</tr>'+                   
+'</thead>'
 }
 
 function editFormHolder(movie){
     $("#movie_list_json").append('<tr id="myTr" class="table-secondary"><form id="edit-form">' +
         `<td><input style="display:none" type="hidden" id="movieId" name="movieId" value="${movie.movieId}"></input></td>` +
-        `<td><input type="text" name="title" class="form-customized" id="movieTitle" placeholder="${movie.title}" /></td>` +
-        `<td><input type="text" name="genre" class="form-customized" id="genre" placeholder="${movie.genre}" /></td>` +
-        `<td><input type="text" name="director" class="form-customized" id="director" placeholder="${movie.director}" /></td>` +
+        `<td><input type="text" name="title" class="form-customized" id="movieTitle" value="${movie.title}" placeholder="title" /></td>` +
+        `<td><input type="text" name="genre" class="form-customized" id="genre" value="${movie.genre}" placeholder="genre" /></td>` +
+        `<td><input type="text" name="director" class="form-customized" id="director" value="${movie.director}" placeholder="director" /></td>` +
+        `<td><input type="text" name="genre" class="form-customized" id="image_url" value="${movie.image}" placeholder="image url" /></td>` +
         `<td  id="excludeFromSearch"><button class="updateButton button" type="submit" onclick='processEditForm()'name="updateMovieBtn">Update Movie</button></td>` +
         '</form></tr>'
     )
@@ -101,7 +110,8 @@ function processEditForm(){
         movieId: parseInt(this["movieId"].value),
         title : this["movieTitle"].value,
         genre : this["genre"].value,
-        director: this["director"].value
+        director: this["director"].value,
+        image: this["image_url"].value
     };
  
     $.ajax({
@@ -129,3 +139,7 @@ $("#myInput").on("keyup", function() {
     });
 });
 });
+
+// $(document).ready(function() {
+//     $('.image-link').magnificPopup({type:'image'});
+//   });
