@@ -120,3 +120,23 @@ function processEditForm(){
     }  
     });
   }
+
+  function searchBar() {
+    // Declare variables
+    var input, filter, tr, td, a, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    tr = document.getElementById("myTr");
+    td = ul.getElementsByTagName('td');
+
+    // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < td.length; i++) {
+    a = td[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      td[i].style.display = "";
+    } else {
+      td[i].style.display = "none";
+    }
+  }
+}
